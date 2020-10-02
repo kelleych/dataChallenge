@@ -90,111 +90,80 @@ west <- subset(df, REGION == "(4) West")
 
 #pie charts
 
-total.race.northeast <- northeast[,"TOTRACEM"] + northeast[,"TOTRACEF"]
-white.male.northeast <- sum(northeast[,"WHITEM"])
-white.female.northeast <- sum(northeast[,"WHITEF"])
-black.male.northeast <- sum(northeast[,"BLACKM"])
-black.female.northeast <- sum(northeast[,"BLACKF"])
-hisp.male.northeast <- sum(northeast[,"HISPM"])
-hisp.female.northeast <- sum(northeast[,"HISPF"])
-asian.male.northeast <- sum(northeast[,"ASIANM"])
-asian.female.northeast <- sum(northeast[,"ASIANF"])
-nhpi.male.northeast <- sum(northeast[,"NHPIM"])
-nhpi.female.northeast <- sum(northeast[,"NHPIF"])
-tworace.male.northeast <- sum(northeast[,"TWORACEM"])
-tworace.female.northeast <- sum(northeast[,"TWORACEF"])
-other.male.northeast <- sum(northeast[,"ADDRACEM"])
-other.female.northeast <- sum(northeast[,"ADDRACEF"])
-unknown.male.northeast <- sum(northeast[,"UNKRACEM"])
-unknown.female.northeast <- sum(northeast[,"UNKRACEF"])
 
-slices.male.northeast <- c(white.male.northeast, black.male.northeast, hisp.male.northeast, asian.male.northeast, nhpi.male.northeast, tworace.male.northeast, other.male.northeast ,unknown.male.northeast)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.northeast/sum(slices.male.northeast)*100)
+total.race.northeast <- northeast[,"TOTRACEM"] + northeast[,"TOTRACEF"]
+white.northeast <- sum(northeast[,"WHITEM"])+sum(northeast[,"WHITEF"])
+black.northeast <- sum(northeast[,"BLACKM"]) + sum(northeast[,"BLACKF"])
+hisp.northeast <- sum(northeast[,"HISPM"]) + sum(northeast[,"HISPF"])
+asian.northeast <- sum(northeast[,"ASIANM"]) + sum(northeast[,"ASIANF"])
+other.male.northeast <- sum(northeast[,"ADDRACEM"], sum(northeast[,"NHPIM"]),sum(northeast[,"TWORACEM"]),sum(northeast[,"UNKRACEM"]))
+other.female.northeast <- sum(northeast[,"ADDRACEF"], sum(northeast[,"NHPIF"]),sum(northeast[,"TWORACEF"]),sum(northeast[,"UNKRACEF"]))
+other.northeast <- other.male.northeast + other.female.northeast
+
+slices.northeast <- c(white.northeast, black.northeast, hisp.northeast, asian.northeast,other.northeast)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.northeast/sum(slices.northeast)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.northeast,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.northeast,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the northeast ")
 
 
-total.race.south <- south[,"TOTRACEM"] + south[,"TOTRACEF"]
-white.male.south <- sum(south[,"WHITEM"])
-white.female.south <- sum(south[,"WHITEF"])
-black.male.south <- sum(south[,"BLACKM"])
-black.female.south <- sum(south[,"BLACKF"])
-hisp.male.south <- sum(south[,"HISPM"])
-hisp.female.south <- sum(south[,"HISPF"])
-asian.male.south <- sum(south[,"ASIANM"])
-asian.female.south <- sum(south[,"ASIANF"])
-nhpi.male.south <- sum(south[,"NHPIM"])
-nhpi.female.south <- sum(south[,"NHPIF"])
-tworace.male.south <- sum(south[,"TWORACEM"])
-tworace.female.south <- sum(south[,"TWORACEF"])
-other.male.south <- sum(south[,"ADDRACEM"])
-other.female.south <- sum(south[,"ADDRACEF"])
-unknown.male.south <- sum(south[,"UNKRACEM"])
-unknown.female.south <- sum(south[,"UNKRACEF"])
 
-slices.male.south <- c(white.male.south, black.male.south, hisp.male.south, asian.male.south, nhpi.male.south, tworace.male.south, other.male.south ,unknown.male.south)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.south/sum(slices.male.south)*100)
+
+total.race.south <- south[,"TOTRACEM"] + south[,"TOTRACEF"]
+white.south <- sum(south[,"WHITEM"])+sum(south[,"WHITEF"])
+black.south <- sum(south[,"BLACKM"]) + sum(south[,"BLACKF"])
+hisp.south <- sum(south[,"HISPM"]) + sum(south[,"HISPF"])
+asian.south <- sum(south[,"ASIANM"]) + sum(south[,"ASIANF"])
+other.male.south <- sum(south[,"ADDRACEM"], sum(south[,"NHPIM"]),sum(south[,"TWORACEM"]),sum(south[,"UNKRACEM"]))
+other.female.south <- sum(south[,"ADDRACEF"], sum(south[,"NHPIF"]),sum(south[,"TWORACEF"]),sum(south[,"UNKRACEF"]))
+other.south <- other.male.south + other.female.south
+
+slices.south <- c(white.south, black.south, hisp.south, asian.south,other.south)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.south/sum(slices.south)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.south,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.south,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the south ")
 
 
 
 total.race.midwest <- midwest[,"TOTRACEM"] + midwest[,"TOTRACEF"]
-white.male.midwest <- sum(midwest[,"WHITEM"])
-white.female.midwest <- sum(midwest[,"WHITEF"])
-black.male.midwest <- sum(midwest[,"BLACKM"])
-black.female.midwest <- sum(midwest[,"BLACKF"])
-hisp.male.midwest <- sum(midwest[,"HISPM"])
-hisp.female.midwest <- sum(midwest[,"HISPF"])
-asian.male.midwest <- sum(midwest[,"ASIANM"])
-asian.female.midwest <- sum(midwest[,"ASIANF"])
-nhpi.male.midwest <- sum(midwest[,"NHPIM"])
-nhpi.female.midwest <- sum(midwest[,"NHPIF"])
-tworace.male.midwest <- sum(midwest[,"TWORACEM"])
-tworace.female.midwest <- sum(midwest[,"TWORACEF"])
-other.male.midwest <- sum(midwest[,"ADDRACEM"])
-other.female.midwest <- sum(midwest[,"ADDRACEF"])
-unknown.male.midwest <- sum(midwest[,"UNKRACEM"])
-unknown.female.midwest <- sum(midwest[,"UNKRACEF"])
+white.midwest <- sum(midwest[,"WHITEM"])+sum(midwest[,"WHITEF"])
+black.midwest <- sum(midwest[,"BLACKM"]) + sum(midwest[,"BLACKF"])
+hisp.midwest <- sum(midwest[,"HISPM"]) + sum(midwest[,"HISPF"])
+asian.midwest <- sum(midwest[,"ASIANM"]) + sum(midwest[,"ASIANF"])
+other.male.midwest <- sum(midwest[,"ADDRACEM"], sum(midwest[,"NHPIM"]),sum(midwest[,"TWORACEM"]),sum(midwest[,"UNKRACEM"]))
+other.female.midwest <- sum(midwest[,"ADDRACEF"], sum(midwest[,"NHPIF"]),sum(midwest[,"TWORACEF"]),sum(midwest[,"UNKRACEF"]))
+other.midwest <- other.male.midwest + other.female.midwest
 
-slices.male.midwest <- c(white.male.midwest, black.male.midwest, hisp.male.midwest, asian.male.midwest, nhpi.male.midwest, tworace.male.midwest, other.male.midwest ,unknown.male.midwest)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.midwest/sum(slices.male.midwest)*100)
+slices.midwest <- c(white.midwest, black.midwest, hisp.midwest, asian.midwest,other.midwest)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.midwest/sum(slices.midwest)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.midwest,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.midwest,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the midwest ")
 
-total.race.west <- west[,"TOTRACEM"] + west[,"TOTRACEF"]
-white.male.west <- sum(west[,"WHITEM"])
-white.female.west <- sum(west[,"WHITEF"])
-black.male.west <- sum(west[,"BLACKM"])
-black.female.west <- sum(west[,"BLACKF"])
-hisp.male.west <- sum(west[,"HISPM"])
-hisp.female.west <- sum(west[,"HISPF"])
-asian.male.west <- sum(west[,"ASIANM"])
-asian.female.west <- sum(west[,"ASIANF"])
-nhpi.male.west <- sum(west[,"NHPIM"])
-nhpi.female.west <- sum(west[,"NHPIF"])
-tworace.male.west <- sum(west[,"TWORACEM"])
-tworace.female.west <- sum(west[,"TWORACEF"])
-other.male.west <- sum(west[,"ADDRACEM"])
-other.female.west <- sum(west[,"ADDRACEF"])
-unknown.male.west <- sum(west[,"UNKRACEM"])
-unknown.female.west <- sum(west[,"UNKRACEF"])
 
-slices.male.west <- c(white.male.west, black.male.west, hisp.male.west, asian.male.west, nhpi.male.west, tworace.male.west, other.male.west ,unknown.male.west)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.west/sum(slices.male.west)*100)
+
+total.race.west <- west[,"TOTRACEM"] + west[,"TOTRACEF"]
+white.west <- sum(west[,"WHITEM"])+sum(west[,"WHITEF"])
+black.west <- sum(west[,"BLACKM"]) + sum(west[,"BLACKF"])
+hisp.west <- sum(west[,"HISPM"]) + sum(west[,"HISPF"])
+asian.west <- sum(west[,"ASIANM"]) + sum(west[,"ASIANF"])
+other.male.west <- sum(west[,"ADDRACEM"], sum(west[,"NHPIM"]),sum(west[,"TWORACEM"]),sum(west[,"UNKRACEM"]))
+other.female.west <- sum(west[,"ADDRACEF"], sum(west[,"NHPIF"]),sum(west[,"TWORACEF"]),sum(west[,"UNKRACEF"]))
+other.west <- other.male.west + other.female.west
+
+slices.west <- c(white.west, black.west, hisp.west, asian.west,other.west)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.west/sum(slices.west)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.west,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.west,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the west ")
 
 #breakdown of races are similar throughout all regions
@@ -207,140 +176,105 @@ lean_dem <- subset(df, party == 2)
 dem <- subset(df, party == 1)
 
 
-total.race.rep <- rep[,"TOTRACEM"] + rep[,"TOTRACEF"]
-white.male.rep <- sum(rep[,"WHITEM"])
-white.female.rep <- sum(rep[,"WHITEF"])
-black.male.rep <- sum(rep[,"BLACKM"])
-black.female.rep <- sum(rep[,"BLACKF"])
-hisp.male.rep <- sum(rep[,"HISPM"])
-hisp.female.rep <- sum(rep[,"HISPF"])
-asian.male.rep <- sum(rep[,"ASIANM"])
-asian.female.rep <- sum(rep[,"ASIANF"])
-nhpi.male.rep <- sum(rep[,"NHPIM"])
-nhpi.female.rep <- sum(rep[,"NHPIF"])
-tworace.male.rep <- sum(rep[,"TWORACEM"])
-tworace.female.rep <- sum(rep[,"TWORACEF"])
-other.male.rep <- sum(rep[,"ADDRACEM"])
-other.female.rep <- sum(rep[,"ADDRACEF"])
-unknown.male.rep <- sum(rep[,"UNKRACEM"])
-unknown.female.rep <- sum(rep[,"UNKRACEF"])
 
-slices.male.rep <- c(white.male.rep, black.male.rep, hisp.male.rep, asian.male.rep, nhpi.male.rep, tworace.male.rep, other.male.rep ,unknown.male.rep)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.rep/sum(slices.male.rep)*100)
+total.race.rep <- rep[,"TOTRACEM"] + rep[,"TOTRACEF"]
+white.rep <- sum(rep[,"WHITEM"])+sum(rep[,"WHITEF"])
+black.rep <- sum(rep[,"BLACKM"]) + sum(rep[,"BLACKF"])
+hisp.rep <- sum(rep[,"HISPM"]) + sum(rep[,"HISPF"])
+asian.rep <- sum(rep[,"ASIANM"]) + sum(rep[,"ASIANF"])
+other.male.rep <- sum(rep[,"ADDRACEM"], sum(rep[,"NHPIM"]),sum(rep[,"TWORACEM"]),sum(rep[,"UNKRACEM"]))
+other.female.rep <- sum(rep[,"ADDRACEF"], sum(rep[,"NHPIF"]),sum(rep[,"TWORACEF"]),sum(rep[,"UNKRACEF"]))
+other.rep <- other.male.rep + other.female.rep
+
+slices.rep <- c(white.rep, black.rep, hisp.rep, asian.rep,other.rep)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.rep/sum(slices.rep)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.rep,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.rep,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the rep ")
 
 
-total.race.lean_rep <- lean_rep[,"TOTRACEM"] + lean_rep[,"TOTRACEF"]
-white.male.lean_rep <- sum(lean_rep[,"WHITEM"])
-white.female.lean_rep <- sum(lean_rep[,"WHITEF"])
-black.male.lean_rep <- sum(lean_rep[,"BLACKM"])
-black.female.lean_rep <- sum(lean_rep[,"BLACKF"])
-hisp.male.lean_rep <- sum(lean_rep[,"HISPM"])
-hisp.female.lean_rep <- sum(lean_rep[,"HISPF"])
-asian.male.lean_rep <- sum(lean_rep[,"ASIANM"])
-asian.female.lean_rep <- sum(lean_rep[,"ASIANF"])
-nhpi.male.lean_rep <- sum(lean_rep[,"NHPIM"])
-nhpi.female.lean_rep <- sum(lean_rep[,"NHPIF"])
-tworace.male.lean_rep <- sum(lean_rep[,"TWORACEM"])
-tworace.female.lean_rep <- sum(lean_rep[,"TWORACEF"])
-other.male.lean_rep <- sum(lean_rep[,"ADDRACEM"])
-other.female.lean_rep <- sum(lean_rep[,"ADDRACEF"])
-unknown.male.lean_rep <- sum(lean_rep[,"UNKRACEM"])
-unknown.female.lean_rep <- sum(lean_rep[,"UNKRACEF"])
 
-slices.male.lean_rep <- c(white.male.lean_rep, black.male.lean_rep, hisp.male.lean_rep, asian.male.lean_rep, nhpi.male.lean_rep, tworace.male.lean_rep, other.male.lean_rep ,unknown.male.lean_rep)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.lean_rep/sum(slices.male.lean_rep)*100)
+total.race.lean_rep <- lean_rep[,"TOTRACEM"] + lean_rep[,"TOTRACEF"]
+white.lean_rep <- sum(lean_rep[,"WHITEM"])+sum(lean_rep[,"WHITEF"])
+black.lean_rep <- sum(lean_rep[,"BLACKM"]) + sum(lean_rep[,"BLACKF"])
+hisp.lean_rep <- sum(lean_rep[,"HISPM"]) + sum(lean_rep[,"HISPF"])
+asian.lean_rep <- sum(lean_rep[,"ASIANM"]) + sum(lean_rep[,"ASIANF"])
+other.male.lean_rep <- sum(lean_rep[,"ADDRACEM"], sum(lean_rep[,"NHPIM"]),sum(lean_rep[,"TWORACEM"]),sum(lean_rep[,"UNKRACEM"]))
+other.female.lean_rep <- sum(lean_rep[,"ADDRACEF"], sum(lean_rep[,"NHPIF"]),sum(lean_rep[,"TWORACEF"]),sum(lean_rep[,"UNKRACEF"]))
+other.lean_rep <- other.male.lean_rep + other.female.lean_rep
+
+slices.lean_rep <- c(white.lean_rep, black.lean_rep, hisp.lean_rep, asian.lean_rep,other.lean_rep)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.lean_rep/sum(slices.lean_rep)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.lean_rep,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.lean_rep,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the lean_rep ")
 
 
-total.race.comp <- comp[,"TOTRACEM"] + comp[,"TOTRACEF"]
-white.male.comp <- sum(comp[,"WHITEM"])
-white.female.comp <- sum(comp[,"WHITEF"])
-black.male.comp <- sum(comp[,"BLACKM"])
-black.female.comp <- sum(comp[,"BLACKF"])
-hisp.male.comp <- sum(comp[,"HISPM"])
-hisp.female.comp <- sum(comp[,"HISPF"])
-asian.male.comp <- sum(comp[,"ASIANM"])
-asian.female.comp <- sum(comp[,"ASIANF"])
-nhpi.male.comp <- sum(comp[,"NHPIM"])
-nhpi.female.comp <- sum(comp[,"NHPIF"])
-tworace.male.comp <- sum(comp[,"TWORACEM"])
-tworace.female.comp <- sum(comp[,"TWORACEF"])
-other.male.comp <- sum(comp[,"ADDRACEM"])
-other.female.comp <- sum(comp[,"ADDRACEF"])
-unknown.male.comp <- sum(comp[,"UNKRACEM"])
-unknown.female.comp <- sum(comp[,"UNKRACEF"])
 
-slices.male.comp <- c(white.male.comp, black.male.comp, hisp.male.comp, asian.male.comp, nhpi.male.comp, tworace.male.comp, other.male.comp ,unknown.male.comp)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.comp/sum(slices.male.comp)*100)
+
+total.race.comp <- comp[,"TOTRACEM"] + comp[,"TOTRACEF"]
+white.comp <- sum(comp[,"WHITEM"])+sum(comp[,"WHITEF"])
+black.comp <- sum(comp[,"BLACKM"]) + sum(comp[,"BLACKF"])
+hisp.comp <- sum(comp[,"HISPM"]) + sum(comp[,"HISPF"])
+asian.comp <- sum(comp[,"ASIANM"]) + sum(comp[,"ASIANF"])
+other.male.comp <- sum(comp[,"ADDRACEM"], sum(comp[,"NHPIM"]),sum(comp[,"TWORACEM"]),sum(comp[,"UNKRACEM"]))
+other.female.comp <- sum(comp[,"ADDRACEF"], sum(comp[,"NHPIF"]),sum(comp[,"TWORACEF"]),sum(comp[,"UNKRACEF"]))
+other.comp <- other.male.comp + other.female.comp
+
+slices.comp <- c(white.comp, black.comp, hisp.comp, asian.comp,other.comp)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.comp/sum(slices.comp)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.comp,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.comp,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the comp ")
 
 
 
-total.race.lean_dem <- lean_dem[,"TOTRACEM"] + lean_dem[,"TOTRACEF"]
-white.male.lean_dem <- sum(lean_dem[,"WHITEM"])
-white.female.lean_dem <- sum(lean_dem[,"WHITEF"])
-black.male.lean_dem <- sum(lean_dem[,"BLACKM"])
-black.female.lean_dem <- sum(lean_dem[,"BLACKF"])
-hisp.male.lean_dem <- sum(lean_dem[,"HISPM"])
-hisp.female.lean_dem <- sum(lean_dem[,"HISPF"])
-asian.male.lean_dem <- sum(lean_dem[,"ASIANM"])
-asian.female.lean_dem <- sum(lean_dem[,"ASIANF"])
-nhpi.male.lean_dem <- sum(lean_dem[,"NHPIM"])
-nhpi.female.lean_dem <- sum(lean_dem[,"NHPIF"])
-tworace.male.lean_dem <- sum(lean_dem[,"TWORACEM"])
-tworace.female.lean_dem <- sum(lean_dem[,"TWORACEF"])
-other.male.lean_dem <- sum(lean_dem[,"ADDRACEM"])
-other.female.lean_dem <- sum(lean_dem[,"ADDRACEF"])
-unknown.male.lean_dem <- sum(lean_dem[,"UNKRACEM"])
-unknown.female.lean_dem <- sum(lean_dem[,"UNKRACEF"])
 
-slices.male.lean_dem <- c(white.male.lean_dem, black.male.lean_dem, hisp.male.lean_dem, asian.male.lean_dem, nhpi.male.lean_dem, tworace.male.lean_dem, other.male.lean_dem ,unknown.male.lean_dem)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.lean_dem/sum(slices.male.lean_dem)*100)
+total.race.lean_dem <- lean_dem[,"TOTRACEM"] + lean_dem[,"TOTRACEF"]
+white.lean_dem <- sum(lean_dem[,"WHITEM"])+sum(lean_dem[,"WHITEF"])
+black.lean_dem <- sum(lean_dem[,"BLACKM"]) + sum(lean_dem[,"BLACKF"])
+hisp.lean_dem <- sum(lean_dem[,"HISPM"]) + sum(lean_dem[,"HISPF"])
+asian.lean_dem <- sum(lean_dem[,"ASIANM"]) + sum(lean_dem[,"ASIANF"])
+other.male.lean_dem <- sum(lean_dem[,"ADDRACEM"], sum(lean_dem[,"NHPIM"]),sum(lean_dem[,"TWORACEM"]),sum(lean_dem[,"UNKRACEM"]))
+other.female.lean_dem <- sum(lean_dem[,"ADDRACEF"], sum(lean_dem[,"NHPIF"]),sum(lean_dem[,"TWORACEF"]),sum(lean_dem[,"UNKRACEF"]))
+other.lean_dem <- other.male.lean_dem + other.female.lean_dem
+
+slices.lean_dem <- c(white.lean_dem, black.lean_dem, hisp.lean_dem, asian.lean_dem,other.lean_dem)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.lean_dem/sum(slices.lean_dem)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.lean_dem,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.lean_dem,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the lean_dem ")
 
 
-total.race.dem <- dem[,"TOTRACEM"] + dem[,"TOTRACEF"]
-white.male.dem <- sum(dem[,"WHITEM"])
-white.female.dem <- sum(dem[,"WHITEF"])
-black.male.dem <- sum(dem[,"BLACKM"])
-black.female.dem <- sum(dem[,"BLACKF"])
-hisp.male.dem <- sum(dem[,"HISPM"])
-hisp.female.dem <- sum(dem[,"HISPF"])
-asian.male.dem <- sum(dem[,"ASIANM"])
-asian.female.dem <- sum(dem[,"ASIANF"])
-nhpi.male.dem <- sum(dem[,"NHPIM"])
-nhpi.female.dem <- sum(dem[,"NHPIF"])
-tworace.male.dem <- sum(dem[,"TWORACEM"])
-tworace.female.dem <- sum(dem[,"TWORACEF"])
-other.male.dem <- sum(dem[,"ADDRACEM"])
-other.female.dem <- sum(dem[,"ADDRACEF"])
-unknown.male.dem <- sum(dem[,"UNKRACEM"])
-unknown.female.dem <- sum(dem[,"UNKRACEF"])
 
-slices.male.dem <- c(white.male.dem, black.male.dem, hisp.male.dem, asian.male.dem, nhpi.male.dem, tworace.male.dem, other.male.dem ,unknown.male.dem)
-lbls <- c("White", "Black", "Hispanic", "Asian", "Native Hawaiian and Pacific Islander", "Two Races", "Other")
-pct <- round(slices.male.dem/sum(slices.male.dem)*100)
+
+
+total.race.dem <- dem[,"TOTRACEM"] + dem[,"TOTRACEF"]
+white.dem <- sum(dem[,"WHITEM"])+sum(dem[,"WHITEF"])
+black.dem <- sum(dem[,"BLACKM"]) + sum(dem[,"BLACKF"])
+hisp.dem <- sum(dem[,"HISPM"]) + sum(dem[,"HISPF"])
+asian.dem <- sum(dem[,"ASIANM"]) + sum(dem[,"ASIANF"])
+other.male.dem <- sum(dem[,"ADDRACEM"], sum(dem[,"NHPIM"]),sum(dem[,"TWORACEM"]),sum(dem[,"UNKRACEM"]))
+other.female.dem <- sum(dem[,"ADDRACEF"], sum(dem[,"NHPIF"]),sum(dem[,"TWORACEF"]),sum(dem[,"UNKRACEF"]))
+other.dem <- other.male.dem + other.female.dem
+
+slices.dem <- c(white.dem, black.dem, hisp.dem, asian.dem,other.dem)
+lbls <- c("White", "Black", "Hispanic", "Asian", "Other")
+pct <- round(slices.dem/sum(slices.dem)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
-pie(slices.male.dem,labels = lbls, col=rainbow(length(lbls)),
+pie(slices.dem,labels = lbls, col=rainbow(length(lbls)),
     main="Pie Chart of Races under jurisdiction in the dem ")
+
+
 
 
 CUSTOTT <- df[,"CUSTOTM"] + df[,"CUSTOTF"]
@@ -374,3 +308,37 @@ percent_cust_vote <- ca.cust/(ca.cust+ca.voters)
 
 #the amount of potential voters prevented from voting in 2018 is
 #not enough to change the decision
+
+
+#use data that shows the number of prisons and connect to restrictions
+prison_df <- percent_cust_df
+prison_df <- cbind(prison_df, prison_census[,2:7])
+prison_df$Total <- prison_df$Total - prison_df$Local - prison_df$Other
+
+total_fac <- c()
+for(i in 1:50){
+  if(prison_df$Total[i] <= 15){
+    total_fac <- c(total_fac, "15 or less")
+  }
+  else if(prison_df$Total[i] <= 40){
+    total_fac <- c(total_fac, "16 to 40")
+  }
+  else if(prison_df$Total[i] <= 125){
+    total_fac <- c(total_fac, "41 to 125")
+  }
+  else{
+    total_fac <- c(total_fac, "126 to 207")
+  }
+}
+
+prison_df <- cbind(prison_df, total_fac)
+table(prison_df$PARTY, prison_df$total_fac)
+
+#leaning republican states have the least states with many prisons, 
+#while solid democrat states have the most states with many prisons
+
+table(prison_df$DISFRANCHISEMENT, prison_df$total_fac)
+
+plot(prison_df$total_fac,prison_df$DISFRANCHISEMENT)
+
+#Stricter states tend to have more states with many prisons
