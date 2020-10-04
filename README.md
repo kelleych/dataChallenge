@@ -13,3 +13,7 @@ Please feel free to look through the datachallenge pdf for a collection of the v
 Hope you all enjoyed our video presentation!
 
 # Link to sources:
+https://www.sentencingproject.org/publications/expanding-vote-two-decades-felony-disenfranchisement-reforms/
+https://www.icpsr.umich.edu/web/NACJD/series/886
+https://www.icpsr.umich.edu/web/ICPSR/studies/37294/datadocumentation#
+https://www.census.gov/programs-surveys/popest/data/tables.2018.html
