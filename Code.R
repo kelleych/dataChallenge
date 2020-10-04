@@ -1,7 +1,77 @@
+data <- load("ICPSR_37639/DS0001/37639-0001-Data.rda")
+census <- read.csv("sc-est2019-agesex-civ.csv")
+census <- census[,c(1:7,17)]
 
+prison_census <- read.csv("prison_census.csv")
+
+#cleaning the data
+census <- subset(census, STATE != 0)
+census <- subset(census, NAME != "District of Columbia")
+census <- subset(census, NAME != "United States")
+census <- subset(census, AGE != 999)
+census <- subset(census, SEX == 0)
+
+#only want to take non minors
+minor <- c(1:17)
+census <- subset(census, !(AGE %in% minor))
+
+pop <- aggregate(census$POPEST2018_CIV, by=list(Category=census$NAME), FUN=sum)[,2]
+
+library(prettyR)
+df <- da37639.0001
+
+df <- df[df$YEAR==2018,]
+df <- df[,colSums(is.na(df))<nrow(df)]
+df<-subset(df, STATE != "US")
+df <- subset(df, STATE != "FE")
+df <- subset(df, STATE != "DC")
+df <- subset(df, STATE != "ST")
+#1 is no restriction
+#2 is prison only
+#3 is prison and parole
+#4 prison, parole, and probation
+#5 prison, parole, probation, and post-sentence
+disfranchisement <- c(5,4,5,4,3,3,3,5,5,4,2,4,2,2,5,4,5,4,1,2,2,2,4,5,4,2,5,5,2,4,4,3,4,2,2,4,2,2,2,4,4,5,4,2,1,5,3,3,3,5)
+df <- cbind(df, disfranchisement)
+#1 is solid democratc
+#2 is lean democratic
+#3 is competitive
+#4 is lean republican
+#5 is solid republican
+
+party <- c(5,5,3,5,1,2,1,1,3,3,1,5,1,2,3,5,3,4,1,1,1,2,2,5,4,4,3,2,1,1,1,1,3,5,3,4,2,2,2,5,5,5,3,5,1,2,1,5,3,5)
+df <- cbind(df, party)
+
+party_fac <- c()
+
+for(i in 1:50){
+  if(party[i] == 1){
+    party_fac <- c(party_fac, "solid dem")
+  }
+  else if(party[i] == 2){
+    party_fac <- c(party_fac, "leaning dem")
+  }
+  else if(party[i] == 3){
+    party_fac <- c(party_fac, "competitive")
+  }
+  else if(party[i] == 4){
+    party_fac <- c(party_fac, "leaning rep")
+  }
+  else{
+    party_fac <- c(party_fac, "solid rep")
+  }
+}
+
+df[,"disfranchisement"] <- as.factor(df$disfranchisement)
+df[,"party"] <- as.factor(df$party)
+df <- df[ , colSums(is.na(df)) == 0]
+
+df$REGION <- droplevels(df$REGION)
 party_disfranchisement <- table(party, disfranchisement)
-plot(party, disfranchisement)
-plot(df$REGION, disfranchisement)
+
+plot(df$party, disfranchisement, main = "Boxplots of Party vs. Felony Restrictions", names = c("Solid Dem", "Lean Dem", "Comp", "Lean Rep", "Solid Rep"))
+plot(df$REGION, disfranchisement, main = "Boxplots of Region vs. Felony Restrictions")
+
 
 
 table(party_fac, disfranchisement)
