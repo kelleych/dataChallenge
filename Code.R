@@ -1,75 +1,3 @@
-#Change the path 
-data <- load("C:/Users/kelle/Downloads/ICPSR_37639/DS0001/37639-0001-Data.rda")
-census <- read.csv("C:/Users/kelle/Downloads/sc-est2019-agesex-civ.csv")
-census <- census[,c(1:7,17)]
-
-#cleaning the data
-census <- subset(census, STATE != 0)
-census <- subset(census, NAME != "District of Columbia")
-census <- subset(census, NAME != "United States")
-census <- subset(census, AGE != 999)
-census <- subset(census, SEX == 0)
-
-#only want to take non minors
-census <- subset(census, !(AGE %in% minor))
-
-pop <- aggregate(census$POPEST2018_CIV, by=list(Category=census$NAME), FUN=sum)[,2]
-
-
-#This part might be different
-library(prettyR)
-lbls <- sort(levels(da37639.0001$MYVAR))
-lbls <- (sub("^\\([0-9]+\\) +(.+$)", "\\1", lbls))
-da37639.0001$MYVAR <- as.numeric(sub("^\\(0*([0-9]+)\\).+$", "\\1", da99999.0001$MYVAR))
-
-da37639.0001$MYVAR <- add.value.labels(da99999.0001$MYVAR, lbls)
-df <- da37639.0001
-
-df <- df[df$YEAR==2018,]
-df <- df[,colSums(is.na(df))<nrow(df)]
-df<-subset(df, STATE != "US")
-df <- subset(df, STATE != "FE")
-df <- subset(df, STATE != "DC")
-df <- subset(df, STATE != "ST")
-#1 is no restriction
-#2 is prison only
-#3 is prison and parole
-#4 prison, parole, and probation
-#5 prison, parole, probation, and post-sentence
-disfranchisement <- c(5,4,5,4,3,3,3,5,5,4,2,4,2,2,5,4,5,4,1,2,2,2,4,5,4,2,5,5,2,4,4,3,4,2,2,4,2,2,2,4,4,5,4,2,1,5,3,3,3,5)
-df <- cbind(df, disfranchisement)
-#1 is solid democratc
-#2 is lean democratic
-#3 is competitive
-#4 is lean republican
-#5 is solid republican
-
-party <- c(5,5,3,5,1,2,1,1,3,3,1,5,1,2,3,5,3,4,1,1,1,2,2,5,4,4,3,2,1,1,1,1,3,5,3,4,2,2,2,5,5,5,3,5,1,2,1,5,3,5)
-df <- cbind(df, party)
-
-party_fac <- c()
-
-for(i in 1:50){
-  if(party[i] == 1){
-    party_fac <- c(party_fac, "solid dem")
-  }
-  else if(party[i] == 2){
-    party_fac <- c(party_fac, "leaning dem")
-  }
-  else if(party[i] == 3){
-    party_fac <- c(party_fac, "competitive")
-  }
-  else if(party[i] == 4){
-    party_fac <- c(party_fac, "leaning rep")
-  }
-  else{
-    party_fac <- c(party_fac, "solid rep")
-  }
-}
-
-df[,"disfranchisement"] <- as.factor(df$disfranchisement)
-df[,"party"] <- as.factor(df$party)
-df <- df[ , colSums(is.na(df)) == 0]
 
 party_disfranchisement <- table(party, disfranchisement)
 plot(party, disfranchisement)
@@ -90,6 +18,7 @@ west <- subset(df, REGION == "(4) West")
 
 #pie charts
 
+my.colors <- c("red", "green", "blue", "pink", "purple")
 
 total.race.northeast <- northeast[,"TOTRACEM"] + northeast[,"TOTRACEF"]
 white.northeast <- sum(northeast[,"WHITEM"])+sum(northeast[,"WHITEF"])
@@ -106,7 +35,7 @@ pct <- round(slices.northeast/sum(slices.northeast)*100)
 lbls <- paste(lbls, pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices.northeast,labels = lbls, col=rainbow(length(lbls)),
-    main="Pie Chart of Races under jurisdiction in the northeast ")
+    main="Pie Chart of Races under jurisdiction in the northeast ", col = my.colors)
 
 
 
@@ -332,13 +261,91 @@ for(i in 1:50){
 }
 
 prison_df <- cbind(prison_df, total_fac)
-table(prison_df$PARTY, prison_df$total_fac)
-
+party.prisons <- table(prison_df$PARTY, prison_df$total_fac)
+names(dimnames(party.prisons)) <- c("Party", "Number of Prisons")
+restrictions.prisons
 #leaning republican states have the least states with many prisons, 
 #while solid democrat states have the most states with many prisons
 
-table(prison_df$DISFRANCHISEMENT, prison_df$total_fac)
+restrictions.prisons <- table(prison_df$DISFRANCHISEMENT, prison_df$total_fac)
+names(dimnames(restrictions.prisons)) <- c("Restrictions", "Number of Prisons")
+restrictions.prisons
 
-plot(prison_df$total_fac,prison_df$DISFRANCHISEMENT)
+plot(prison_df$total_fac,prison_df$DISFRANCHISEMENT, main = "Number of Prisons vs. Restrictions")
 
 #Stricter states tend to have more states with many prisons
+
+plot(df$party, df$disfranchisement)
+#only counting state and federal prisons
+
+no.rest <- subset(prison_df, disfranchisement == 1)
+prison.only <- subset(prison_df, disfranchisement == 2)
+prison.parole <- subset(prison_df, disfranchisement == 3)
+prison.parole.more <- subset(prison_df, disfranchisement == 4)
+all.rest <- subset(prison_df, disfranchisement == 5)
+
+no.rest.15.less <- sum(no.rest[, "total_fac"] == "15 or less")
+no.rest.16.to.40 <- sum(no.rest[,"total_fac"] == "16 to 40")
+no.rest.41.to.125 <- sum(no.rest[,"total_fac"] == "41 to 125")
+no.rest.126.to.207 <- sum(no.rest[,"total_fac"] == "126 to 207")
+
+slices.no.rest <- c(no.rest.15.less, no.rest.16.to.40, no.rest.41.to.125, no.rest.126.to.207)
+lbls <- c("Less than 15", "16 to 40", "41 to 125","126 to 207")
+pct <- round(slices.no.rest/sum(slices.no.rest)*100)
+lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(lbls,"%",sep="") # ad % to labels
+pie(slices.no.rest,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Number of Prisons and No Restrictions")
+
+
+prison.only.15.less <- sum(prison.only[, "total_fac"] == "15 or less")
+prison.only.16.to.40 <- sum(prison.only[,"total_fac"] == "16 to 40")
+prison.only.41.to.125 <- sum(prison.only[,"total_fac"] == "41 to 125")
+prison.only.126.to.207 <- sum(prison.only[,"total_fac"] == "126 to 207")
+
+slices.prison.only <- c(prison.only.15.less, prison.only.16.to.40, prison.only.41.to.125, prison.only.126.to.207)
+lbls <- c("Less than 15", "16 to 40", "41 to 125","126 to 207")
+pct <- round(slices.prison.only/sum(slices.prison.only)*100)
+lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(lbls,"%",sep="") # ad % to labels
+pie(slices.prison.only,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Number of Prisons and Prison Only Restriction")
+
+prison.parole.15.less <- sum(prison.parole[, "total_fac"] == "15 or less")
+prison.parole.16.to.40 <- sum(prison.parole[,"total_fac"] == "16 to 40")
+prison.parole.41.to.125 <- sum(prison.parole[,"total_fac"] == "41 to 125")
+prison.parole.126.to.207 <- sum(prison.parole[,"total_fac"] == "126 to 207")
+
+slices.prison.parole <- c(prison.parole.15.less, prison.parole.16.to.40, prison.parole.41.to.125, prison.parole.126.to.207)
+lbls <- c("Less than 15", "16 to 40", "41 to 125","126 to 207")
+pct <- round(slices.prison.parole/sum(slices.prison.parole)*100)
+lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(lbls,"%",sep="") # ad % to labels
+pie(slices.prison.parole,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Number of Prisons and Prison, Parole")
+
+prison.parole.more.15.less <- sum(prison.parole.more[, "total_fac"] == "15 or less")
+prison.parole.more.16.to.40 <- sum(prison.parole.more[,"total_fac"] == "16 to 40")
+prison.parole.more.41.to.125 <- sum(prison.parole.more[,"total_fac"] == "41 to 125")
+prison.parole.more.126.to.207 <- sum(prison.parole.more[,"total_fac"] == "126 to 207")
+
+slices.prison.parole.more <- c(prison.parole.more.15.less, prison.parole.more.16.to.40, prison.parole.more.41.to.125, prison.parole.more.126.to.207)
+lbls <- c("Less than 15", "16 to 40", "41 to 125","126 to 207")
+pct <- round(slices.prison.parole.more/sum(slices.prison.parole.more)*100)
+lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(lbls,"%",sep="") # ad % to labels
+pie(slices.prison.parole.more,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Number of Prisons and Restrictions")
+
+all.rest.15.less <- sum(all.rest[, "total_fac"] == "15 or less")
+all.rest.16.to.40 <- sum(all.rest[,"total_fac"] == "16 to 40")
+all.rest.41.to.125 <- sum(all.rest[,"total_fac"] == "41 to 125")
+all.rest.126.to.207 <- sum(all.rest[,"total_fac"] == "126 to 207")
+
+slices.all.rest <- c(all.rest.15.less, all.rest.16.to.40, all.rest.41.to.125, all.rest.126.to.207)
+lbls <- c("Less than 15", "16 to 40", "41 to 125","126 to 207")
+pct <- round(slices.all.rest/sum(slices.all.rest)*100)
+lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(lbls,"%",sep="") # ad % to labels
+pie(slices.all.rest,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Number of Prisons and Restrictions")
