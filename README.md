@@ -8,3 +8,4 @@ Kelley Chu
 Amila Hidic
 Yemi Lawrence
 
+Please feel free to look through the datachallenge pdf for a collection of the visualizations we were able create from the datasets we gathered. To get a replicate of the visualizaitons, 
