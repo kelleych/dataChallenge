@@ -8,7 +8,7 @@ Kelley Chu
 Amila Hidic
 Yemi Lawrence
 
-Please feel free to look through the datachallenge pdf for a collection of the visualizations we were able create from the datasets we gathered. To replicate the visualizations seen in the pdf,use the code file above.
+Please feel free to look through the datachallenge pdf for a collection of the visualizations we were able to create from the datasets we gathered. To replicate the visualizations seen in the pdf, use the code file above.
 
 Hope you all enjoyed our video presentation!
 
